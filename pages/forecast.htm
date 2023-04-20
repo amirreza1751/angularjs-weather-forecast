@@ -1,0 +1,23 @@
+<a href="#/">Back to home.</a> <br>
+
+Forecast for {{ city }}
+<hr>
+Steps:
+<a ng-class="{'bg-primary': cnt === '2'}" href="#/forecast/2">2</a> |
+<a ng-class="{'bg-primary': cnt === '5'}" href="#/forecast/5">5</a> |
+<a ng-class="{'bg-primary': cnt === '7'}" href="#/forecast/7">7</a>
+
+<div ng-repeat="w in weatherResult.list">
+    <div class="row">
+        <div class="col-md-12">
+            <temp-element
+                    weather-day="w"
+                    convert-temp="convertTemp(temp)"
+                    convert-date="convertDate(date)"
+                    format-date="MMM, d, y h:mm a"
+            >
+
+            </temp-element>
+        </div>
+    </div>
+</div>
