@@ -21,10 +21,7 @@ weatherApp.config(function ($routeProvider) {
     })
 });
 
-//SERVICE
-weatherApp.service('cityService', function (){
-    this.city = 'Ragusa'
-});
+
 
 // CONTROLLERS
 weatherApp.controller('homeController', ['$scope', '$location', 'cityService', function($scope, $location, cityService) {
@@ -37,15 +34,13 @@ weatherApp.controller('homeController', ['$scope', '$location', 'cityService', f
     }
 }]);
 
-weatherApp.controller('forecastController', ['$scope', '$resource', '$routeParams', 'cityService', function($scope, $resource, $routeParams, cityService) {
+weatherApp.controller('forecastController', ['$scope', '$routeParams', 'cityService', 'weatherService', function($scope, $routeParams, cityService, weatherService) {
     $scope.cnt = $routeParams.cnt || '2';
     $scope.city = cityService.city;
     $scope.$watch('city', function (){
         cityService.city = $scope.city;
     });
-    $scope.weatherAPI = $resource("https://api.openweathermap.org/data/2.5/forecast?&appid=f8397e820ce3d584b2aa4d795f3c3a4e",
-        {callback: "JSON_CALLBACK"}, {get: {method: "JSONP"}});
-    $scope.weatherResult = $scope.weatherAPI.get({q: $scope.city, cnt: $scope.cnt});
+    $scope.weatherResult = weatherService.GetWeather($scope.city, $scope.cnt);
 
     $scope.convertTemp = function (degK){
         return Math.round(degK - 273.15);
